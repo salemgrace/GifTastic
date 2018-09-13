@@ -1,5 +1,6 @@
 // Create an array of animals for the buttons
-var animalArray = ["tiger", "bear", "skunk"];
+var animalArray = [];
+
 
 
 $("#animal-button").on("click", function() {
@@ -9,6 +10,14 @@ $("#animal-button").on("click", function() {
 
 var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=cyaIbgkfVto6nIfS1ZUnOnP738WcnUNZ&q=" + 
     animal + "&limit=10";
+
+
+// displayImages () { 
+//     for (var i = 0; i < animalArray[this.currentAnimal].length; i++) {
+//             ("button class='new-animal-button' id='button' data-name='" + 
+//             animalArray[this] + "'></button>");
+//         }
+//     }
 
 $.ajax({
     url: queryURL,
@@ -20,22 +29,23 @@ $.ajax({
 var results = response.data;
 
 // Pull from giphy 10 pictures
-for (var i = 0; i <results.length; i++) {
+
+for (var i = 0; i < results.length; i++) {
+    
+    console.log(results[i]);
     var animalGifDiv = $("<div>");
-
-    var rating = results[i].rating;
-
-    var p = $("<p>").text("Rating: " + rating);
 
     var animalGif = $("<img>");
 
-    animalGif.attr("src", results[i].images.fixed_height.url);
+    animalGif.attr("src", results[i].images.fixed_height_still.url);
+    
+    var rating = results[i].rating;
+    var p = $("<p>").text("Rating: " + rating);
 
     animalGifDiv.append(p);
     animalGifDiv.append(animalGif);
 
-    $("#gifs-appear-here").prepend(animalGif);
-
+    $("#gifs-appear-here").append(animalGifDiv);
 }
 
 // For these pictures they need to be formated in the same size for layout
@@ -47,5 +57,4 @@ for (var i = 0; i <results.length; i++) {
 // The pictures clear out when a new group of ten is loaded in
 
 });
-
 });
