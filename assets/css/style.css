@@ -1,0 +1,14 @@
+#button-holder {
+    background-color: pink;
+    padding: 10px;
+    margin: 40px;
+}
+
+.gif-class {
+    padding: 20px;
+    float: left;
+}
+
+.buttons {
+    margin: 10px;
+}

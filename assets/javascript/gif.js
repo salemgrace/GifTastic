@@ -1,11 +1,42 @@
+$(document).ready(function() {
+
 // Create an array of animals for the buttons
-var animalArray = [];
+var animalArray = ["giraffe", "panda", "monkey"];
+
+for (var i = 0; i < animalArray.length; i++) {
+    var animalButton = $("<button>");
+    
+    animalButton.attr("data-animal", animalArray[i]);
+}
+
+var animal;
+
+$("#button-adder").on("click", function(event) {
+    event.preventDefault();
+
+    var newAnimal = $("#input-animal").val().trim();
+    console.log("New animal button: ", newAnimal);
+
+    animalButton = $("<button>");
+
+    animalButton.addClass("buttons");
+    animalButton.attr("data-animal", newAnimal);
+    animalButton.text(newAnimal);
+
+    $("#button-holder").append(animalButton);
+
+    $("#input-animal").val("");
 
 
+});
 
-$("#animal-button").on("click", function() {
+$(".buttons").on("click", function() {
     // In this case, the "this" keyword refers to the button that was clicked
-    var animal = $(this).attr("data-animal");
+    
+    $("#gifs-appear-here").empty();
+
+    animal = $(this).attr("data-animal");
+    console.log("Button Clicked Animal: ", animal);
 
 
 var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=cyaIbgkfVto6nIfS1ZUnOnP738WcnUNZ&q=" + 
@@ -33,10 +64,11 @@ var results = response.data;
 for (var i = 0; i < results.length; i++) {
     
     console.log(results[i]);
+
     var animalGifDiv = $("<div>");
+    animalGifDiv.addClass("gif-class");
 
     var animalGif = $("<img>");
-
     animalGif.attr("src", results[i].images.fixed_height_still.url);
     
     var rating = results[i].rating;
@@ -57,4 +89,7 @@ for (var i = 0; i < results.length; i++) {
 // The pictures clear out when a new group of ten is loaded in
 
 });
+
+});
+
 });
