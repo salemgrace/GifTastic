@@ -3,6 +3,7 @@ $(document).ready(function() {
 // Create an array of animals for the buttons
 var animalArray = ["giraffe", "panda", "monkey"];
 
+
 checkAnimalArray();
 
 function checkAnimalArray() {
@@ -21,9 +22,11 @@ for (var i = 0; i < animalArray.length; i++) {
     $("#button-holder").append(animalButton);
 }
 
+console.log(animalArray);
+
 }
 
-var animal;
+// var animal;
 
 $("#button-adder").on("click", function(event) {
     event.preventDefault();
@@ -45,7 +48,7 @@ $(".buttons").on("click", function() {
     
     $("#gifs-appear-here").empty();
 
-    animal = $(this).attr("data-animal");
+    var animal = $(this).data("animal");
     console.log("Button Clicked Animal: ", animal);
 
 
@@ -71,8 +74,16 @@ for (var i = 0; i < results.length; i++) {
     var animalGifDiv = $("<div>");
     animalGifDiv.addClass("gif-class");
 
+    var animated = results[i].images.fixed_height.url;
+    var still = results[i].images.fixed_height_still.url;
+
     var animalGif = $("<img>");
-    animalGif.attr("src", results[i].images.fixed_height_still.url);
+
+    animalGif.attr("src", still);
+    animalGif.attr("data-still", still);
+    animalGif.attr("data-animate", animated);
+    animalGif.attr("data-state", "still");
+    animalGif.addClass("animal-image");
     
     var rating = results[i].rating;
     var p = $("<p>").text("Rating: " + rating);
