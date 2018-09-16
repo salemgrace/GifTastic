@@ -4,8 +4,6 @@ $(document).ready(function() {
 var animalArray = ["giraffe", "panda", "monkey"];
 
 
-checkAnimalArray();
-
 function checkAnimalArray() {
 
     $("#button-holder").empty();
@@ -43,12 +41,14 @@ $("#button-adder").on("click", function(event) {
 
 });
 
-$(".buttons").on("click", function() {
+$(document).on("click", ".buttons", function() {
     // In this case, the "this" keyword refers to the button that was clicked
     
     $("#gifs-appear-here").empty();
+    $(".buttons").removeClass("active");
+    $(this).addClass("active");
 
-    var animal = $(this).data("animal");
+    var animal = $(this).attr("data-animal");
     console.log("Button Clicked Animal: ", animal);
 
 
@@ -93,17 +93,24 @@ for (var i = 0; i < results.length; i++) {
 
     $("#gifs-appear-here").append(animalGifDiv);
 }
-
-// For these pictures they need to be formated in the same size for layout
-
-// The pictures can only move when clicked - they should come "paused"
-
-// When a new animal is entered in the search, ten new pictures appear
-
-// The pictures clear out when a new group of ten is loaded in
-
 });
 
 });
+
+$(document).on("click", ".animal-image", function() {
+
+    var state = $(this).attr("data-state");
+
+    if (state === "still") {
+      $(this).attr("src", $(this).attr("data-animate"));
+      $(this).attr("data-state", "animate");
+    }
+    else {
+      $(this).attr("src", $(this).attr("data-still"));
+      $(this).attr("data-state", "still");
+    }
+  });
+
+checkAnimalArray();
 
 });
